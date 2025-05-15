@@ -28,7 +28,7 @@ Based on its format and scope, I think CGOA might be one of the easiest certific
   - [Related Practices (16%)](#related-practices-16)
   - [GitOps Patterns (20%)](#gitops-patterns-20)
   - [Tooling (14%)](#tooling-14)
-- [🔗 Official & Community Resources](#-official--community-resources)
+- [🔗 Official & Community Resources](#official--community-resources)
 
 ## Who This Is For
 
@@ -126,6 +126,8 @@ See: *“GitOps Use Cases - What Can You Do with GitOps?”*
 
 #### Continuous
 
+"Continuous" is intended to match the industry standard term: reconciliation continues to happen, not that it must be instantaneous.
+
 
 
 #### Declarative Description
@@ -146,17 +148,29 @@ See: *“GitOps Use Cases - What Can You Do with GitOps?”*
 
 ### GitOps Principles (30%)
 
+GitOps is a set of principles for operating and managing software systems. These principles are derived from modern software operations, but are also rooted in pre-existing and widely adopted best practices.
+
 <p align="center">
   <img src="./img/gitops_principles.png" alt="gitops-principles" width="800"/>
 </p>
 
-📚 *Source:* [How to Ace the (CGOA) Certified GitOps Associate Exam ](https://cd.foundation/blog/2024/07/10/ace-cgoa-exam/)  
+📚 *Source:* [How to Ace the (CGOA) Certified GitOps Associate Exam](https://cd.foundation/blog/2024/07/10/ace-cgoa-exam/)  
 
-#### Declarative
+The desired state of a GitOps managed system must be:
 
-#### Versioned and Immutable
-#### Pulled Automatically
-#### Continuously Reconciled
+#### Declarative:
+A system managed by GitOps must have its desired state expressed declaratively.
+
+#### Versioned and Immutable:
+Desired state is stored in a way that enforces immutability, versioning and retains a complete version history.
+
+#### Pulled Automatically:
+Software agents automatically pull the desired state declarations from the source.
+
+#### Continuously Reconciled:
+Software agents continuously observe actual system state and attempt to apply the desired state.
+
+📚 *Source:* [GitOps Principles v1.0.0](https://github.com/open-gitops/documents/blob/v1.0.0/PRINCIPLES.md)
 
 ### Related Practices (16%)
 
@@ -170,6 +184,8 @@ See: *“GitOps Use Cases - What Can You Do with GitOps?”*
 
 📚 *Source:* [LFS162 - Introduction to DevOps and Site Reliability Engineering](https://trainingportal.linuxfoundation.org/learn/course/introduction-to-devops-and-site-reliability-engineering-lfs162/introduction-to-devops-and-sre/what-is-devops-and-site-reliability-engineering-sre?page=1)  
 See: *“What is DevOps and Site Reliability Engineering (SRE)?”*
+
+**DevSecOps (Development + Security + Operations)**
 
 #### CI and CD
 
@@ -555,7 +571,6 @@ See: *“What is DevOps and Site Reliability Engineering (SRE)?”*
 
 </details>
 
-
 ## Official & Community Resources
 
 - **Official Curriculum:**  
@@ -566,7 +581,7 @@ See: *“What is DevOps and Site Reliability Engineering (SRE)?”*
 
 - **Open GitOps:**
   [GitOps Glossary v1.0.0](https://github.com/open-gitops/documents/blob/v1.0.0/GLOSSARY.md)
-  
+
 - **Free Courses:**  
   * [Linux Foundation – Introduction to GitOps (LFS169)](https://trainingportal.linuxfoundation.org/courses/introduction-to-gitops-lfs169)
   * [Linux Foundation – Introduction to DevOps and Site Reliability Engineering (LFS162)](https://training.linuxfoundation.org/training/introduction-to-devops-and-site-reliability-engineering-lfs162/)
