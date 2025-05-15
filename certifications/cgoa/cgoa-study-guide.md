@@ -1,6 +1,6 @@
 # Cloud Native GitOps Associate (CGOA) Certification Study Guide
 
-> 📌 Last updated: May 8, 2025 – Preparing for CGOA exam scheduled on May 17
+> 📌 Last updated: May 15, 2025 – Preparing for CGOA exam scheduled on May 17
 
 <p align="center">
   <img src="./../../img/gitops_associate.svg" alt="golden-kubestronaut" width="250"/>
@@ -90,8 +90,8 @@ If you have time the day before or a few days in advance, it might be worth chec
 - **Unofficial Study Guide:**  
   [GitHub – otkd/CGOA-Study-Guide](https://github.com/otkd/CGOA-Study-Guide)
 
-- **Free Course:**  
+- **Free Courses:**  
   [Linux Foundation – Introduction to GitOps (LFS169)](https://trainingportal.linuxfoundation.org/courses/introduction-to-gitops-lfs169)
-
+  [Linux Foundation – Introduction to DevOps and Site Reliability Engineering (LFS162)](https://training.linuxfoundation.org/training/introduction-to-devops-and-site-reliability-engineering-lfs162/)
 - **Exam Tips & Insights:**  
   [CD Foundation Blog – Ace the CGOA Exam](https://cd.foundation/blog/2024/07/10/ace-cgoa-exam/?utm_content=300040572&utm_medium=social&utm_source=linkedin&hss_channel=lcp-19100461)
