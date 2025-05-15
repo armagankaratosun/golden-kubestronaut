@@ -23,8 +23,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) prin
   - Planned/actual study durations
   - Status badges
 - 📂 Organized `certifications/` directory with future structure for each exam
+- ✅ Initial version of the **GitOps Practice Questions**, grouped by domain.
+- ✅ Added links to foundational Linux Foundation courses (LFS162 and LFS169) and other online sources.
+- ✅ Inserted the GitOps Use Cases diagram with caption and source.
+- ✅ Documented GitOps curriculum domains as subsections in the Study Guide.
 
 ---
+### Changed
+- 🔁 Updated Table of Contents for all major sections and subsections.
 
 ## [Backlog Ideas]
 
