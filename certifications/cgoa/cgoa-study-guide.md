@@ -1,6 +1,6 @@
 # Certified GitOps Associate (CGOA) Certification Study Guide
 
-> 📌 Last updated: May 15, 2025 – Preparing for CGOA exam scheduled on May 17
+> 📌 Last updated: May 17, 2025 – CGOA exam passed on May 17
 
 <p align="center">
   <img src="./../../img/gitops_associate.svg" alt="CGOA" width="250"/>
