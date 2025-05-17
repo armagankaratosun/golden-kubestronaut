@@ -1,9 +1,9 @@
-# Cloud Native GitOps Associate (CGOA) Certification Study Guide
+# Certified GitOps Associate (CGOA) Certification Study Guide
 
 > 📌 Last updated: May 15, 2025 – Preparing for CGOA exam scheduled on May 17
 
 <p align="center">
-  <img src="./../../img/gitops_associate.svg" alt="golden-kubestronaut" width="250"/>
+  <img src="./../../img/gitops_associate.svg" alt="CGOA" width="250"/>
 </p>
 
 Based on its format and scope, I think CGOA might be one of the easiest certifications to start for those already familiar with DevOps, CI/CD, Git workflows, and tools like Terraform, Ansible, ArgoCD, and Helm. Since it's a multiple-choice exam focused on principles rather than hands-on tasks, it seems more approachable compared to other certifications in the Golden Kubestronaut bundle.
