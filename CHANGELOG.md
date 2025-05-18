@@ -35,7 +35,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) prin
 ## [2025-05-17] - CGOA Certification Obtained 🎉
 
 ### Added
-- 🏆 Successfully passed the **Cloud Native GitOps Associate (CGOA)** certification exam
+- 🏆 Successfully passed the **Certified GitOps Associate (CGOA)** certification exam
 - 🟢 Final badge updated in `README.md` and certification table
 
 ### Changed
