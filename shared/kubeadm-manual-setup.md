@@ -7,7 +7,6 @@
   <img src="../img/kubeadm.png" alt="Kubeadm" width="250"/>
 </p>
 
----
 
 ## 1. Disable Swap
 
