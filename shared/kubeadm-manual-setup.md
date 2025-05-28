@@ -47,13 +47,13 @@ sudo sysctl --system
 ```bash
 
 sudo apt-get update -y
-apt-get install -y software-properties-common curl apt-transport-https ca-certificates
+sudo apt-get install -y software-properties-common curl apt-transport-https ca-certificates
 
 # Add CRI-O repo
 curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key |
-    gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
+   sudo gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /" |
-    tee /etc/apt/sources.list.d/cri-o.list
+    sudo tee /etc/apt/sources.list.d/cri-o.list
 
 # Install CRI-O
 sudo apt-get update -y
@@ -84,15 +84,16 @@ sudo apt-get install -y kubelet=1.32.0-* kubeadm=1.32.0-* kubectl=1.32.0-*
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
-## 7. Set kubelet Extra Arguments
+## 7. Set `kubelet` Extra Arguments
 
 ```
 sudo apt-get install -y jq
 
 
 local_ip="$(ip --json a s | jq -r '.[] | if .ifname == "eth1" then .addr_info[] | if .family == "inet" then .local else empty end else empty end')"
-cat > /etc/default/kubelet << EOF
-KUBELET_EXTRA_ARGS=--node-ip=$local_ip
+
+sudo tee /etc/default/kubelet <<EOF
+KUBELET_EXTRA_ARGS=--node-ip=${local_ip}
 ${ENVIRONMENT}
 EOF
 ```
@@ -101,11 +102,17 @@ EOF
 
 ```bash
 sudo kubeadm init \
-  --apiserver-advertise-address=<ControlPlaneIp> \
-  --apiserver-cert-extra-sans=<ControlPlaneIp> \
+  --apiserver-advertise-address="${local_ip}" \
+  --apiserver-cert-extra-sans="${local_ip}" 
 ```
 
-## 9. Set Up `kubectl` for the `vagrant` User
+## 9. Install Calico CNI (ControlPlane Node Only)
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/calico.yaml
+```
+
+## 10. Set Up `kubectl` for the `vagrant` User (ControlPlane Node Only)
 
 ```bash
 mkdir -p $HOME/.kube
@@ -113,19 +120,18 @@ sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
----
-
-## 10. Install Calico CNI
+## 11. Verify ControlPlane Status (ControlPlane Node Only)
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/calico.yaml
+kubectl get nodes -o wide
+kubectl get pods -n kube-system
 ```
 
----
+You should see the controlplane in `Ready` state and all system pods running.
 
-## 11. Join Worker Nodes
+## 12. Join Worker Nodes (Worker Node(s) Only)
 
-On each worker node, run the command printed at the end of `kubeadm init`. If you lost it, regenerate:
+On each worker node, run the commands until the `step 7` then  run the command printed at the end of `kubeadm init`. If you lost it, regenerate it from the `controlplane`:
 
 ```bash
 kubeadm token create --print-join-command
@@ -135,10 +141,10 @@ Run the output on each worker:
 
 ```bash
 sudo kubeadm join <ControlPlaneIp>:6443 --token <...> --discovery-token-ca-cert-hash sha256:<...> \
-  --cri-socket=unix:///var/run/crio/crio.sock
+
 ```
 
-## 12. Verify Cluster Status
+## 13. Verify Cluster Status Again
 
 ```bash
 kubectl get nodes -o wide
