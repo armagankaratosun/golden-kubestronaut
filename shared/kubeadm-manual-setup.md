@@ -44,7 +44,6 @@ sudo sysctl --system
 ## 4. Install CRI-O Runtime
 
 ```bash
-
 sudo apt-get update -y
 sudo apt-get install -y software-properties-common curl apt-transport-https ca-certificates
 
@@ -112,9 +111,11 @@ EOF
 ```bash
 sudo kubeadm init \
   --apiserver-advertise-address="${local_ip}" \
-  --apiserver-cert-extra-sans="${local_ip}" 
-  --service-cidr=172.17.1.0/18
-  --pod-network-cidr=172.16.1.0/16
+  --apiserver-cert-extra-sans="${local_ip}" \
+  --service-cidr=172.17.1.0/18 \
+  --pod-network-cidr=10.244.0.0/16 \
+  --node-name "controlplane" \
+  --ignore-preflight-errors Swap
 ```
 
 ## 9. Set Up `kubectl` for the `vagrant` User (ControlPlane Node Only)
@@ -155,7 +156,7 @@ sudo kubeadm join <ControlPlaneIp>:6443 --token <...> --discovery-token-ca-cert-
 
 ```
 
-## 13. Verify Cluster Status Again
+## 13. Verify Cluster Status Again (ControlPlane Node Only)
 
 ```bash
 kubectl get nodes -o wide
@@ -163,3 +164,12 @@ kubectl get pods -n kube-system
 ```
 
 You should see all nodes in `Ready` state and all system pods running.
+
+## 14. Label Worker Nodes (ControlPlane Node Only)
+
+```bash
+kubectl label node worker1 node-role.kubernetes.io/worker=worker
+kubectl label node worker2 node-role.kubernetes.io/worker=worker
+```
+
+
