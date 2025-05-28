@@ -75,7 +75,17 @@ echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
   | sudo tee /etc/apt/sources.list.d/kubernetes.list
 ```
 
-## 6. Install Kubernetes Components
+## 6. Add Node IPs to `/etc/hosts` 
+
+```bash
+sudo tee -a /etc/hosts > /dev/null <<EOF
+10.0.0.10  controlplane
+10.0.0.11  worker1
+10.0.0.12  worker2
+EOF
+```
+
+## 7. Install Kubernetes Components
 
 ```bash
 sudo apt-get update
@@ -103,20 +113,22 @@ EOF
 sudo kubeadm init \
   --apiserver-advertise-address="${local_ip}" \
   --apiserver-cert-extra-sans="${local_ip}" 
+  --service-cidr=172.17.1.0/18
+  --pod-network-cidr=172.16.1.0/16
 ```
 
-## 9. Install Calico CNI (ControlPlane Node Only)
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/calico.yaml
-```
-
-## 10. Set Up `kubectl` for the `vagrant` User (ControlPlane Node Only)
+## 9. Set Up `kubectl` for the `vagrant` User (ControlPlane Node Only)
 
 ```bash
 mkdir -p $HOME/.kube
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+## 10. Install Calico CNI (ControlPlane Node Only)
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/calico.yaml
 ```
 
 ## 11. Verify ControlPlane Status (ControlPlane Node Only)
