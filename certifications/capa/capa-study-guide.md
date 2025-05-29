@@ -50,14 +50,6 @@ Reasons why to use Argo Workflows:
 * Kubernetes fits with the rest of the company’s infrastructure, making collaboration easier.
 
 
-References
-
-https://argo-workflows.readthedocs.io/en/latest/workflow-concepts/#template-definitions
-
-https://github.com/Al-HusseinHameedJasim/certified-argo-project-associate
-
-https://paulyu.dev/article/capa-study-guide/
-
 **Understand Argo Workflow Fundementals**
 
 **Argo Workflow Controller** is responsible for reconciling the desired state of the Workflow.
@@ -169,3 +161,13 @@ There is built-in support for git, HTTP, GCS, and S3 artifacts.
 ### Argo CD (34%)
 
 **Understand Argo CD Fundementals**
+
+
+
+References
+
+https://argo-workflows.readthedocs.io/en/latest/workflow-concepts/#template-definitions
+
+https://github.com/Al-HusseinHameedJasim/certified-argo-project-associate
+
+https://paulyu.dev/article/capa-study-guide/
