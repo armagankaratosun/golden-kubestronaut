@@ -12,11 +12,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) prin
 - 🎯 **Golden Kubestronaut** journey initiated — tracking 14 CNCF/Linux Foundation certifications in one repo
 
 ### Added
+- 📌 **Exam scheduled**: KCNA (Kubernetes and Cloud Native Associate) for **June 04, 2025**
 - 🧪 Initial Vagrant environment for the **Kubestronaut Lab**—foundational setup for hands-on exam prep  
 - 📂 Created notes for Argo Workflows, CD, Rollouts, and Events (pending polish)  
 - 📘 Draft structure for the **CAPA Study Guide** (pending polish)  
 
 ### Changed
+- 🔄 Updated `README.md` and certification table to reflect KCNA exam scheduled for **June 04, 2025**  
 - 🔄 Updated badges in `README.md` and certification table to reflect revised statuses  
 - ⏳ Rescheduled CAPA exam from **May 25 → May 29**, 2025 due to personal challenges  
 
