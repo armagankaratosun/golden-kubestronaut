@@ -1,6 +1,6 @@
 # Kubernetes and Cloud Native Associate (KCNA) Certification Study Guide
 
-> 📌 Last updated: Jun 3, 2025 – KCNA exam scheduled on Jun 4
+> 📌 Last updated: Aug 5, 2025 – KCNA exam exam passed on Jun 4
 
 <p align="center">
   <img src="./../../img/kcna.png" alt="KCNA" width="250"/>

@@ -12,19 +12,29 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) prin
 - 🎯 **Golden Kubestronaut** journey initiated — tracking 14 CNCF/Linux Foundation certifications in one repo
 
 ### Added
-- 📌 **Exam scheduled**: KCNA (Kubernetes and Cloud Native Associate) for **June 04, 2025**
 - 🧪 Initial Vagrant environment for the **Kubestronaut Lab**—foundational setup for hands-on exam prep  
 - 📂 Created notes for Argo Workflows, CD, Rollouts, and Events (pending polish)  
 - 📘 Draft structure for the **CAPA Study Guide** (pending polish)  
+- 📘 Draft structure for the **KCNA Study Guide** (pending polish) 
 
 ### Changed
 - 🔄 Updated `README.md` and certification table to reflect KCNA exam scheduled for **June 04, 2025**  
 - 🔄 Updated badges in `README.md` and certification table to reflect revised statuses  
-- ⏳ Rescheduled CAPA exam from **May 25 → May 29**, 2025 due to personal challenges  
 
 ### In Progress
 - 🧹 Polishing **CGOA Study Guide** visuals and remaining content  
 - 🧽 Finalizing **CAPA** hands-on how-to docs and guide content  
+- 🧽 Finalizing **KCNA** hands-on how-to docs and guide content  
+---
+
+## [2025-06-04] - KCNA Certification Obtained 🎉
+
+### Added
+- 🏆 Successfully passed the **KCNA (Kubernetes and Cloud Native Associate)** certification exam
+- 🟢 Final badge updated in `README.md` and certification table
+
+### Changed
+- 🔁 Archived KCNA study status from *"In Progress"* to *"Passed"*.
 ---
 
 ## [2025-05-29] - CAPA Certification Obtained 🎉
@@ -82,4 +92,4 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) prin
 - [ ] Finalize and polish GitOps Study Guide for v1, including remaining content and visuals
 - [ ] Post-exam reflection and update to CGOA study guide
 - [ ] Track resource usage per certification (course completion, hours logged, etc.)
-- [ ] Finalize decision: **Which certification comes after CAPA?**
+- [ ] Finalize decision: **Which certification comes after KCNA?**
