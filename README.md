@@ -12,13 +12,13 @@ This repository documents everything I learn and create along the way, including
 
 * [![CGOA Passed](https://img.shields.io/badge/CGOA%20Exam-Complated-brightgreen?logo=git&logoColor=white&style=for-the-badge)](./certifications/cgoa/cgoa-study-guide.md)
 * [![CAPA Passed](https://img.shields.io/badge/CAPA%20Exam-Complated-brightgreen?logo=argo&logoColor=white&style=for-the-badge)](./certifications/capa/capa-study-guide.md)
-* [![KCNA Scheduled](https://img.shields.io/badge/KCNA%20Exam-Scheduled-blueviolet?logo=kubernetes&logoColor=white&style=for-the-badge)](./certifications/kcna/)
+* [![KCNA Passed](https://img.shields.io/badge/KCNA%20Exam-Complated-brightgreen?logo=kubernetes&logoColor=white&style=for-the-badge)](./certifications/kcna/)
 
 ## 🌟 Exams to Pass
 
 | #  | Certification Name                                                                                      | Status                                                                                   | Planned Study Duration | Recommended Study Duration |
 |----|----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|------------------------|------------------------|
-| 1  | [KCNA – Kubernetes and Cloud Native Associate Exam](./certifications/kcna/)    | ![Scheduled](https://img.shields.io/badge/Scheduled-blueviolet?style=for-the-badge)                 | 2 days                    | TBD                        |
+| 1  | [KCNA – Kubernetes and Cloud Native Associate Exam](./certifications/kcna/)    | ![Completed](https://img.shields.io/badge/Completed-brightgreen?style=for-the-badge)                 | 2 days                    | TBD                        |
 | 2  | [KCSA – Kubernetes and Cloud Security Associate](./certifications/kcsa/)                                | ![Planned](https://img.shields.io/badge/Planned-lightgrey?style=for-the-badge&labelColor=555)   | TBD                    | TBD                    |
 | 3  | [CKA – Certified Kubernetes Administrator](./certifications/cka/)                                       | ![Planned](https://img.shields.io/badge/Planned-lightgrey?style=for-the-badge&labelColor=555)   | TBD                    | TBD                    |
 | 4  | [CKAD – Certified Kubernetes Application Developer](./certifications/ckad/)                             | ![Planned](https://img.shields.io/badge/Planned-lightgrey?style=for-the-badge&labelColor=555)   | TBD                    | TBD                    |

@@ -164,7 +164,8 @@ There is built-in support for git, HTTP, GCS, and S3 artifacts.
 
 
 
-References
+## Official & Community Resources
+
 
 https://argo-workflows.readthedocs.io/en/latest/workflow-concepts/#template-definitions
 
