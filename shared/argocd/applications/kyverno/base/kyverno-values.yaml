@@ -2,3 +2,6 @@
 crds:
   # -- Whether to have Helm install the Kyverno CRDs, if the CRDs are not installed by Helm, they must be added before policies can be created
   install: true
+
+config: 
+  preserve: false 
