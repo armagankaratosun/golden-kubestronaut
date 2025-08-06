@@ -1,0 +1,174 @@
+---
+- name: Common Kubernetes Node Setup
+  hosts: all
+  become: true
+  vars:
+    kube_version: "1.32.0-*"
+  tasks:
+    - name: disable => swap
+      command: swapoff -a
+
+    - name: persist => swap disable
+      replace:
+        path: /etc/fstab
+        regexp: '(^.*\sswap\s.*$)'
+        replace: '# \1'
+
+    - name: load => kernel modules config
+      copy:
+        dest: /etc/modules-load.d/k8s.conf
+        content: |
+          overlay
+          br_netfilter
+
+    - name: modprobe => overlay, br_netfilter
+      shell: |
+        modprobe overlay
+        modprobe br_netfilter
+
+    - name: set => sysctl for Kubernetes networking
+      copy:
+        dest: /etc/sysctl.d/k8s.conf
+        content: |
+          net.bridge.bridge-nf-call-iptables  = 1
+          net.bridge.bridge-nf-call-ip6tables = 1
+          net.ipv4.ip_forward                 = 1
+
+    - name: apply => sysctl
+      command: sysctl --system
+
+    - name: install => required base packages
+      apt:
+        name:
+          - software-properties-common
+          - curl
+          - apt-transport-https
+          - ca-certificates
+          - jq
+        update_cache: true
+
+    - name: add => CRI-O repository
+      shell: |
+        mkdir -p /etc/apt/keyrings
+        curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key \
+          | gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
+        echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /" \
+          > /etc/apt/sources.list.d/cri-o.list
+      args:
+        creates: /etc/apt/sources.list.d/cri-o.list
+
+    - name: install => CRI-O
+      apt:
+        name: cri-o
+        update_cache: true
+
+    - name: enable => CRI-O
+      systemd:
+        name: crio
+        enabled: true
+        state: started
+
+    - name: add => Kubernetes APT repository
+      shell: |
+        mkdir -p /etc/apt/keyrings
+        curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key \
+          | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+        echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" \
+          > /etc/apt/sources.list.d/kubernetes.list
+      args:
+        creates: /etc/apt/sources.list.d/kubernetes.list
+
+    - name: install => Kubernetes components
+      apt:
+        name:
+          - "kubelet={{ kube_version }}"
+          - "kubeadm={{ kube_version }}"
+          - "kubectl={{ kube_version }}"
+        update_cache: true
+
+    - name: hold => Kubernetes packages
+      dpkg_selections:
+        name: "{{ item }}"
+        selection: hold
+      loop:
+        - kubelet
+        - kubeadm
+        - kubectl
+
+    - name: add => /etc/hosts entries
+      lineinfile:
+        path: /etc/hosts
+        line: "{{ item }}"
+        state: present
+      loop:
+        - "10.0.0.10  controlplane"
+        - "10.0.0.11  worker1"
+        - "10.0.0.12  worker2"
+
+    - name: configure => kubelet node IP
+      shell: |
+        local_ip="$(ip --json a s | jq -r '.[] | select(.ifname=="eth1") | .addr_info[] | select(.family=="inet") | .local')"
+        echo "KUBELET_EXTRA_ARGS=--node-ip=${local_ip}" > /etc/default/kubelet
+      args:
+        executable: /bin/bash
+
+
+- name: Control Plane Initialization
+  hosts: kube_control_plane
+  become: true
+  tasks:
+    - name: get => controlplane local IP
+      command: ip --json a s
+      register: ip_json
+      changed_when: false
+
+    - name: set => fact local_ip
+      set_fact:
+        local_ip: "{{ ip_json.stdout | from_json | selectattr('ifname','equalto','eth1') | map(attribute='addr_info') | first | selectattr('family','equalto','inet') | map(attribute='local') | first }}"
+
+    - name: init => kubeadm controlplane
+      command: >
+        kubeadm init
+        --apiserver-advertise-address={{ local_ip }}
+        --apiserver-cert-extra-sans={{ local_ip }},127.0.0.1,localhost,{{ ansible_hostname }}
+        --service-cidr=172.17.1.0/18
+        --pod-network-cidr=10.244.0.0/16
+        --node-name controlplane
+        --cri-socket=unix:///var/run/crio/crio.sock
+        --ignore-preflight-errors Swap
+      args:
+        creates: /etc/kubernetes/admin.conf
+
+    - name: setup => kubectl for vagrant user
+      become_user: vagrant
+      shell: |
+        mkdir -p $HOME/.kube
+        sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+    - name: install => Calico CNI
+      become_user: vagrant
+      command: kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/calico.yaml
+
+- name: Worker Node Join
+  hosts: kube_workers
+  become: true
+  tasks:
+    - name: get => kubeadm join command
+      command: kubeadm token create --print-join-command
+      delegate_to: controlplane
+      register: join_cmd
+      changed_when: false
+
+    - name: join => worker to cluster
+      command: "{{ join_cmd.stdout }} --cri-socket=unix:///var/run/crio/crio.sock"
+      args:
+        creates: /etc/kubernetes/kubelet.conf
+
+    - name: label => worker nodes
+      become_user: vagrant
+      delegate_to: controlplane
+      shell: |
+        kubectl label node worker1 node-role.kubernetes.io/worker=worker
+        kubectl label node worker2 node-role.kubernetes.io/worker=worker
+      ignore_errors: true
