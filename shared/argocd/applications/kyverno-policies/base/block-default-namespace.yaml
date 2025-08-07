@@ -5,8 +5,8 @@ metadata:
 spec:
   # Enforce the policy immediately on admission
   validationFailureAction: enforce
-  # You can disable background scans if you only care about live requests:
-  background: true
+  # Wildcard policy not allowed in background mode. Set spec.background=false to disable background mode for this policy rule
+  background: false
   rules:
     - name: deny-in-default
       # Only consider CREATE and UPDATE operations
