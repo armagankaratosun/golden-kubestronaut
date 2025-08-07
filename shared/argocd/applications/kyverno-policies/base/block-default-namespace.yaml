@@ -14,6 +14,7 @@ spec:
         - key: "{{ request.operation }}"
           operator: In
           value: ["CREATE", "UPDATE"]
+      skipBackgroundRequests: true
       match:
         resources:
           # 'kinds: *' means “all resource kinds”
@@ -22,5 +23,6 @@ spec:
           namespaces:
             - default
       validate:
+        allowExistingViolations: false
         message: "Deployments into the default namespace are not allowed. Please use a dedicated namespace."
         deny: {}
