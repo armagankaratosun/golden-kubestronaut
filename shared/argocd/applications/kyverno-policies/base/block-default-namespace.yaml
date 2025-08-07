@@ -16,8 +16,9 @@ spec:
           value: ["CREATE", "UPDATE"]
       match:
         resources:
-          # 'kinds: null' means “all resource kinds”
-          kinds: null
+          # 'kinds: *' means “all resource kinds”
+          kinds: 
+           - "*"
           namespaces:
             - default
       validate:
