@@ -1,0 +1,25 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: block-default-namespace
+spec:
+  # Enforce the policy immediately on admission
+  validationFailureAction: enforce
+  # You can disable background scans if you only care about live requests:
+  background: true
+  rules:
+    - name: deny-in-default
+      # Only consider CREATE and UPDATE operations
+      preconditions:
+        - key: "{{ request.operation }}"
+          operator: In
+          value: ["CREATE", "UPDATE"]
+      match:
+        resources:
+          # 'kinds: null' means “all resource kinds”
+          kinds: null
+          namespaces:
+            - default
+      validate:
+        message: "Deployments into the default namespace are not allowed. Please use a dedicated namespace."
+        deny: {}
